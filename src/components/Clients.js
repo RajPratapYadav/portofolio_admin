@@ -1,6 +1,7 @@
 import { useState } from "react"
 import colors from "./Colors"
-import { BasicInfo } from "./ClientForms"
+import { BasicInfo, Layout, LayoutInputForm, Links, Payment, Pricing } from "./ClientForms"
+import TermForm from "./TermsForm"
 
 export const Client=()=>{
     const [innerTab,setInnerTab]=useState(0)
@@ -19,6 +20,7 @@ export const Client=()=>{
         alignItems:'center',
         borderWidth:.5,
         paddingTop:5,
+        opacity:.5,
         
         paddingBottom:5,
         borderStyle:'solid',
@@ -38,14 +40,32 @@ export const Client=()=>{
             <text onClick={()=>{setInnerTab(3)}} style={innerTab>=3?selectedTabStyle:unSelectedTabStyle}>Links</text>
             <text onClick={()=>{setInnerTab(4)}} style={innerTab>=4?selectedTabStyle:unSelectedTabStyle}>Payment</text>
             <text onClick={()=>{setInnerTab(5)}} style={innerTab>=5?selectedTabStyle:unSelectedTabStyle}>Bookings</text>
-            <text onClick={()=>{setInnerTab(6)}} style={innerTab>=6?selectedTabStyle:unSelectedTabStyle}>Terms</text>
-            <text onClick={()=>{setInnerTab(7)}} style={innerTab>=7?selectedTabStyle:unSelectedTabStyle}>Customers</text>
-            <text onClick={()=>{setInnerTab(8)}} style={innerTab>=8?selectedTabStyle:unSelectedTabStyle}>About Us</text>
-            <text onClick={()=>{setInnerTab(9)}} style={innerTab>=9?selectedTabStyle:unSelectedTabStyle}>Contact Us</text>
+            <text onClick={()=>{setInnerTab(6)}} style={innerTab>=6?selectedTabStyle:unSelectedTabStyle}>Pricing</text>
+            
+            <text onClick={()=>{setInnerTab(7)}} style={innerTab>=7?selectedTabStyle:unSelectedTabStyle}>Terms</text>
+            <text onClick={()=>{setInnerTab(8)}} style={innerTab>=8?selectedTabStyle:unSelectedTabStyle}>Customers</text>
+            <text onClick={()=>{setInnerTab(9)}} style={innerTab>=9?selectedTabStyle:unSelectedTabStyle}>About Us</text>
+            <text onClick={()=>{setInnerTab(10)}} style={innerTab>=10?selectedTabStyle:unSelectedTabStyle}>Contact Us</text>
  
         </div>
         {innerTab==0&&<BasicInfo
         setTab={setTabValue}/>}
+        
+        {innerTab==1&&<Layout
+        setTab={setTabValue}/>}
+        
+        {innerTab==2&&<LayoutInputForm
+        setTab={setTabValue}/>}
+        
+        {innerTab==3&&<Links setTab={setTabValue}/>}
+        {innerTab==4&&<Payment setTab={setTabValue}/>}
+        {innerTab==6&&<Pricing setTab={setTabValue}/>}
+
+        {innerTab==7&&<TermForm/>}
+        {innerTab==8&&<TermForm/>}
+        {innerTab==9&&<TermForm/>}
+        {innerTab==10&&<TermForm/>}
+        
 
     </div>)
 }
