@@ -55,58 +55,58 @@ export const NavBar = ({ style ,updateTab}) => {
         alignItems: 'center',
         padding: '10px',
       }}>
-        {data.WetherHome&&<text alt="Logo 2" style={{ fontWeight: 'bold', paddingLeft: 20, paddingRight: 20,color:colors.primary }}>
+        { (data.WetherHome||data.AdminData.Role_Type==1)&&<text alt="Logo 2" style={{ fontWeight: 'bold', paddingLeft: 20, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(0)}}>
             Home
           </span>
         </text>}
-       {data.WetherClients&& <text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+       { (data.WetherClients||data.AdminData.Role_Type==1)&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(1)}}>
             Clients
           </span>
         </text>}
-        {data.WetherBanner&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+        { (data.WetherBanner||data.AdminData.Role_Type==1)&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(2)}}>
             Banner
           </span>
         </text>}
-        {data.WetherMeeting&&
+        { (data.WetherMeeting||data.AdminData.Role_Type==1)&&
         <text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(3)}}>
             Meeting
           </span>
         </text>}
         
-        {data.WetherPayment&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+        { (data.WetherPayment||data.AdminData.Role_Type==1)&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(4)}}>
             Payment
           </span>
         </text>}
         
-       {data.WetherBooking&& <text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+       { (data.WetherBooking||data.AdminData.Role_Type==1)&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(5)}}>
             Booking
           </span>
         </text>}
         
-        {data.WetherDocument&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+        { (data.WetherDocument||data.AdminData.Role_Type==1)&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(6)}}>
             Documents
           </span>
         </text>}
         
-        {data.WetherCostumers&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+        { (data.WetherCostumers||data.AdminData.Role_Type==1)&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(7)}}>
             Customers
           </span>
         </text>}
-       {data.WetherContact&& <text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+       { (data.WetherContact||data.AdminData.Role_Type==1)&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(8)}}>
             Contact Me
           </span>
         </text>}
         
-        {data.WetherAboutUs&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+        { (data.WetherAboutUs||data.AdminData.Role_Type==1)&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(9)}}>
             About us
           </span>
@@ -136,7 +136,7 @@ return(<div style={{width:'100%',backgroundColor:'#f7f7f7',paddingTop:15}}>
 <ul style={{ display: 'flex', flexDirection: 'row', overflow: 'hidden',overflow: 'hidden', // Hide the scrollbar
   
   width: '100%',listStyleType: 'none', paddingLeft:'5%',paddingLeft:'5%' }}>
-        {data.map((item, index) => (
+        { data.map((item, index) => (
           <li key={index}><PricingItem item={item} updateScreen={updateScreen}/></li>
         ))}
       </ul>
