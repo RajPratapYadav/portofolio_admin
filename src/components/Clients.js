@@ -131,7 +131,7 @@ export const Client=()=>{
       getInformation()
     }, []);
     const getInformation= async()=> {
-      var x=localStorage.getItem('ProfileData')
+      let x= await localStorage.getItem('ProfileData')
       setData(x)
     }
     const unSelectedTabStyle={

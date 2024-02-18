@@ -36,7 +36,7 @@ export const NavBar = ({ style ,updateTab}) => {
     getInformation()
   }, []);
   const getInformation= async()=> {
-    var x=localStorage.getItem('ProfileData')
+    let x= await localStorage.getItem('ProfileData')
     console.log(x);
     setData(JSON.parse(x))
   }
