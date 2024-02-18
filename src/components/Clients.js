@@ -9,7 +9,7 @@ export const Login = ({updateLogin}) => {
 
   const handleLogin = () => {
     // Perform login logic here (e.g., send credentials to server)
-    console.log('Logging in with:', { EmailID, Password });
+  //  console.log('Logging in with:', { EmailID, Password });
     handleApiCall();
   };
   
@@ -29,7 +29,7 @@ export const Login = ({updateLogin}) => {
       }
 
       const data = await response.json();
-      localStorage.setItem('ProfileData', JSON.stringify(data));
+      localStorage.setItem('ProfileData', JSON.stringify(data.extras));
 
       console.log(data.extras);
 updateLogin();

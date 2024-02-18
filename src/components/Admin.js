@@ -195,7 +195,16 @@ export const AdminList = () => {
 }
 
 export const Checkbox = ({ id, formData, handleBannerChange }) => {
-  const checked = formData[`Wether${id}`];
+  const checked = id === 1 ? formData.WetherBanner :
+  id === 2 ? formData.WetherPayment :
+      id === 4 ? formData.WetherMeeting :
+          id === 6 ? formData.WetherBooking :
+            id === 7 ? formData.WetherDocument :
+              id === 8 ? formData.WetherCostumers :
+                id === 9 ? formData.WetherContact :
+                  id === 10 ? formData.WetherAboutUs :
+                  id===0?formData.WetherClients:
+                  false;
 
   return (
     <label style={{ flexDirection: 'row', display: 'flex', alignItems: 'flex-start', whiteSpace: 'nowrap' }}>
