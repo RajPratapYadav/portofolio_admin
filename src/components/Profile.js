@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import colors from './Colors';
 import { ContactForm } from './Form';
 
@@ -31,6 +31,15 @@ const Profile = ({ screenHeight }) => {
 };
 
 export const NavBar = ({ style ,updateTab}) => {
+  const [data,setData]=useState({})
+  useEffect(() => {
+    getInformation()
+  }, []);
+  const getInformation= async()=> {
+    var x=localStorage.getItem('ProfileData')
+    console.log(x);
+    setData(JSON.parse(x))
+  }
   return (
     <div style={style}>
       <div style={{ flexDirection: 'row' }}>
@@ -46,62 +55,62 @@ export const NavBar = ({ style ,updateTab}) => {
         alignItems: 'center',
         padding: '10px',
       }}>
-        <text alt="Logo 2" style={{ fontWeight: 'bold', paddingLeft: 20, paddingRight: 20,color:colors.primary }}>
+        {data.WetherHome&&<text alt="Logo 2" style={{ fontWeight: 'bold', paddingLeft: 20, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(0)}}>
             Home
           </span>
-        </text>
-        <text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+        </text>}
+       {data.WetherClients&& <text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(1)}}>
             Clients
           </span>
-        </text>
-        <text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+        </text>}
+        {data.WetherBanner&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(2)}}>
             Banner
           </span>
-        </text>
-        
+        </text>}
+        {data.WetherMeeting&&
         <text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(3)}}>
             Meeting
           </span>
-        </text>
+        </text>}
         
-        <text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+        {data.WetherPayment&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(4)}}>
             Payment
           </span>
-        </text>
+        </text>}
         
-        <text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+       {data.WetherBooking&& <text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(5)}}>
             Booking
           </span>
-        </text>
+        </text>}
         
-        <text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+        {data.WetherDocument&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(6)}}>
             Documents
           </span>
-        </text>
+        </text>}
         
-        <text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+        {data.WetherCostumers&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(7)}}>
             Customers
           </span>
-        </text>
-        <text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+        </text>}
+       {data.WetherContact&& <text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(8)}}>
             Contact Me
           </span>
-        </text>
+        </text>}
         
-        <text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+        {data.WetherAboutUs&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(9)}}>
             About us
           </span>
-        </text>
+        </text>}
       </div>
 
     </div>

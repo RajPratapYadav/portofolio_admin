@@ -2,11 +2,21 @@ import { useState } from "react";
 
 export const AdminList = () => {
   const [formData, setFormData] = useState({
-    dropdown: '',
+    typeOfAdmin: '',
     serialNumber: '',
     name: '',
     phoneNumber: '',
-    emailId: '',
+    username: '',
+    WetherAboutUs: false,
+    WetherContact: false,
+    WetherCostumers: false,
+    WetherDocument: false,
+    WetherBooking: false,
+    WetherPayment: false,
+    WetherMeeting: false,
+    WetherBanner: false,
+    WetherClients: false,
+    WetherHome: false
   });
 
   const handleChange = (e) => {
@@ -17,10 +27,60 @@ export const AdminList = () => {
     });
   };
 
+  const handleEmailChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleApiCall = async () => {
+    try {
+      const response = await fetch('https://api.experteconsult.com/admin/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData), 
+      });
+
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      localStorage.setItem('ProfileData', JSON.stringify(data.data));
+
+      console.log(data.data);
+      alert("SignUp Success")
+//      setApiData(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      alert('An error occurred while fetching data. Please try again.'); // Basic alert for error handling
+    }
+  };
+
+  const handlePhoneChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleBannerChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.checked,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform any actions with the form data here
     console.log('Form data submitted:', formData);
+    // Perform any other actions with the form data here
+    handleApiCall()
   };
 
   return (<div style={{ width: "100%", display: 'flex', flexDirection: 'row' }}>
@@ -49,17 +109,16 @@ export const AdminList = () => {
     <div className="form-container" style={{ width: "30%", margin: '2%', display: 'flex', flexDirection: 'column' }}>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="dropdown" style={{ alignItems: 'flex-start', alignSelf: 'flex-start', textAlign: 'left' }}>Type of Admin:</label>
+          <label htmlFor="typeOfAdmin" style={{ alignItems: 'flex-start', alignSelf: 'flex-start', textAlign: 'left' }}>Type of Admin:</label>
           <select
-            id="dropdown"
-            name="dropdown"
-            value={formData.dropdown}
+            id="typeOfAdmin"
+            name="typeOfAdmin"
+            value={formData.typeOfAdmin}
             onChange={handleChange}
           >
             <option value="">Select an option</option>
-            <option value="Modular">Modular</option>
-            <option value="Independent">Independent</option>
-            {/* Add more options as needed */}
+            <option value='1'>Modular</option>
+            <option value="2">Independent</option>
           </select>
         </div>
         <div className="form-group">
@@ -89,7 +148,7 @@ export const AdminList = () => {
             id="phoneNumber"
             name="phoneNumber"
             value={formData.phoneNumber}
-            onChange={handleChange}
+            onChange={handlePhoneChange}
           />
         </div>
         <div className="form-group">
@@ -97,19 +156,37 @@ export const AdminList = () => {
           <input
             type="email"
             id="emailId"
-            name="emailId"
-            value={formData.emailId}
-            onChange={handleChange}
+            name="username"
+            value={formData.username}
+            onChange={handleEmailChange}
           />
         </div>
-      {formData.dropdown=='Modular'&&<div style={{flexDirection:'column',width:'100%',alignItems:'flex-start',display:'flex'}}>  
-      <Checkbox id={1}/>
+        <div className="form-group">
+            <label htmlFor="password" style={{ alignItems: 'flex-start', alignSelf: 'flex-start', textAlign: 'left' }}>Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
+      {formData.typeOfAdmin=='1'&&<div style={{flexDirection:'column',width:'100%',alignItems:'flex-start',display:'flex'}}>  
+      <Checkbox id={0}  key={0} formData={formData} handleBannerChange={handleBannerChange}/>
+     
+      <Checkbox id={1}  key={1} formData={formData} handleBannerChange={handleBannerChange}/>
     
-        <Checkbox id={2}/>
-        <Checkbox id={3}/>
+        <Checkbox id={2}  key={2} formData={formData} handleBannerChange={handleBannerChange}/>
+        <Checkbox id={4}  key={4} formData={formData} handleBannerChange={handleBannerChange}/>
+        <Checkbox id={6}  key={6} formData={formData} handleBannerChange={handleBannerChange}/>
+        <Checkbox id={7}  key={7} formData={formData} handleBannerChange={handleBannerChange}/>
+        <Checkbox id={8}  key={8} formData={formData} handleBannerChange={handleBannerChange}/>
+        <Checkbox id={9}  key={9} formData={formData} handleBannerChange={handleBannerChange}/>
+        <Checkbox id={10}  key={10} formData={formData} handleBannerChange={handleBannerChange}/>
    
         </div>
-   }     <div className="form-group">
+   }  
+      <div className="form-group">
           <button type="submit">Create</button>
         </div>
       </form>
@@ -117,40 +194,37 @@ export const AdminList = () => {
   </div>)
 }
 
-
-export const Checkbox = ({ id }) => {
-  const [checked, setChecked] = useState(false);
-
-  const handleCheckboxChange = () => {
-    setChecked(!checked);
-  };
+export const Checkbox = ({ id, formData, handleBannerChange }) => {
+  const checked = formData[`Wether${id}`];
 
   return (
-    <label style={{ flexDirection: 'row', display: 'flex', alignItems: 'flex-start',maxLines:1 }} >
+    <label style={{ flexDirection: 'row', display: 'flex', alignItems: 'flex-start', whiteSpace: 'nowrap' }}>
       <input
-    style={{paddingRight:15}}
+        style={{ paddingRight: 15 }}
         type="checkbox"
         checked={checked}
-        onChange={handleCheckboxChange}
+        onChange={() => handleBannerChange({ target: { name: id === 1 ? 'WetherBanner' :
+        id === 2 ? 'WetherPayment' :
+            id === 4 ? 'WetherMeeting' :
+                id === 6 ? 'WetherBooking' :
+                  id === 7 ? 'WetherDocument' :
+                    id === 8 ? 'WetherCostumers' :
+                      id === 9 ? 'WetherContact' :
+                        id === 10 ? 'WetherAboutUs' :
+                        id===0?"WetherClients":
+                        id, checked: !checked } })}
       />
-        {id == 1 ? '\t  Banners' : id == 2 ? '\t  Payments' :id==3? '\t   Terms&condition':id}
+      {id === 1 ? 'Banners' :
+        id === 2 ? 'Payments' :
+            id === 4 ? 'Meeting' :
+                id === 6 ? 'Booking' :
+                  id === 7 ? 'Document' :
+                    id === 8 ? 'Customer' :
+                      id === 9 ? 'Contact Me' :
+                        id === 10 ? 'About Us' :
+                        id===0?"Clients":
+                        id}
     </label>
   );
 };
 
-const CheckboxGrid = () => {
-  return ( <div style={{ marginTop: 20, marginBottom: 30, flexDirection: 'column', display: 'flex', width: '100%', alignItems: 'flex-start' }}>
-  <table style={{ borderCollapse: 'collapse' }}>
-    <tbody>
-      {[1, 2, 3].map((row) => (
-        <tr key={row}>
-          <td style={{ padding: '8px', textAlign: 'center' }}>
-            <Checkbox id={row} />
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
-  );
-};

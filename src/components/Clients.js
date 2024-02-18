@@ -1,10 +1,122 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import colors from "./Colors"
-import { BasicInfo, Layout, LayoutInputForm, Links, Payment, Pricing } from "./ClientForms"
+import { BasicInfo, BookingManagement, Layout, LayoutInputForm, Links, Payment, Pricing } from "./ClientForms"
 import TermForm from "./TermsForm"
 
+export const Login = ({updateLogin}) => {
+  const [EmailID, setUsername] = useState('');
+  const [Password, setPassword] = useState('');
+
+  const handleLogin = () => {
+    // Perform login logic here (e.g., send credentials to server)
+    console.log('Logging in with:', { EmailID, Password });
+    handleApiCall();
+  };
+  
+  
+  const handleApiCall = async () => {
+    try {
+      const response = await fetch('https://api.experteconsult.com/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ EmailID,Password }), // Replace with your actual data
+      });
+
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      localStorage.setItem('ProfileData', JSON.stringify(data.data));
+
+      console.log(data.data);
+updateLogin();
+//      setApiData(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      alert('An error occurred while fetching data. Please try again.'); // Basic alert for error handling
+    }
+  };
+
+
+  return (
+    <div style={styles.loginContainer}>
+      <div style={styles.loginCard}>
+        <h2 style={styles.cardTitle}>Login</h2>
+        <form>
+          <div style={styles.formGroup}>
+            <label htmlFor="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              style={styles.formInput}
+              value={EmailID}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div style={styles.formGroup}>
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              style={styles.formInput}
+              value={Password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button type="button" style={styles.btnPrimary} onClick={handleLogin}>
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+const styles = {
+  loginContainer: {
+    textAlign: 'center',
+  },
+  loginCard: {
+    backgroundColor: '#fff',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+    padding: '20px',
+    width: '300px',
+    borderRadius: '5px',
+    margin: 'auto',
+    marginTop: '50px',
+  },
+  cardTitle: {
+    marginBottom: '20px',
+    color: '#333',
+    fontSize: '1.5rem',
+  },
+  formGroup: {
+    marginBottom: '15px',
+  },
+  formInput: {
+    width: '100%',
+    padding: '10px',
+    boxSizing: 'border-box',
+    border: '1px solid #ccc',
+    borderRadius: '3px',
+  },
+  btnPrimary: {
+    backgroundColor: '#007bff',
+    color: '#fff',
+    padding: '10px 15px',
+    border: 'none',
+    borderRadius: '3px',
+    cursor: 'pointer',
+  },
+};
+
+  
 export const Client=()=>{
     const [innerTab,setInnerTab]=useState(0)
+    const [data,setData]=useState({})
     const selectedTabStyle={
         flex:1,
         alignItems:'center',
@@ -14,6 +126,13 @@ export const Client=()=>{
         backgroundColor:colors.secondary,
         color:colors.white,
         
+    }
+    useEffect(() => {
+      getInformation()
+    }, []);
+    const getInformation= async()=> {
+      var x=localStorage.getItem('ProfileData')
+      setData(x)
     }
     const unSelectedTabStyle={
         
@@ -59,6 +178,8 @@ export const Client=()=>{
         
         {innerTab==3&&<Links setTab={setTabValue}/>}
         {innerTab==4&&<Payment setTab={setTabValue}/>}
+        
+        {innerTab==5&&<BookingManagement setTab={setTabValue}/>}
         {innerTab==6&&<Pricing setTab={setTabValue}/>}
 
         {innerTab==7&&<TermForm/>}

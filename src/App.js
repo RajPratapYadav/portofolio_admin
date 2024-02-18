@@ -4,14 +4,26 @@ import './Styles.css';
 import { NavBar } from './components/Profile';
 import { useState } from 'react';
 import { AdminList } from './components/Admin';
-import { Client } from './components/Clients';
+import { Client, Login } from './components/Clients';
 
 function App() {
+  const [isLogin,setLogin]=useState(false)
   const [tab,setTab]=useState(0)
   const updateTab=(tabValue)=>{
     setTab(tabValue)
   }
+  const updateLogin=(tabValue)=>{
+    setLogin(tabValue)
+  }
   return (
+    <div>
+    {
+    isLogin==false?
+
+    <div className="App">
+      <Login updateLogin={updateLogin}/>
+    </div>
+    :
     <div className="App">
     <NavBar
           style={{
@@ -28,6 +40,7 @@ function App() {
           {tab==0&&<AdminList/>}
           {tab==1&&<Client/>}
 
+    </div>}
     </div>
   );
 }
