@@ -29,9 +29,9 @@ export const Login = ({updateLogin}) => {
       }
 
       const data = await response.json();
-      localStorage.setItem('ProfileData', JSON.stringify(data.data));
+      localStorage.setItem('ProfileData', JSON.stringify(data));
 
-      console.log(data.data);
+      console.log(data);
 updateLogin();
 //      setApiData(data);
     } catch (error) {
