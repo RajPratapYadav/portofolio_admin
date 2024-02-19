@@ -84,7 +84,7 @@ request.Name=formData.Name
       }).
       then((response) => {
         formData = {};
-        
+        alert("Succcessfull")
       }).catch((error)=>{
 var msg=''
 try {
@@ -93,7 +93,7 @@ try {
   msg="Something Wents Wrong!"
 }
         console.log(msg)
-       alert("Warning\n\n"+msg)
+       alert(msg)
       })
       
       };
