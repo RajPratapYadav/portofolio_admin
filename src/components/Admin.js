@@ -1,12 +1,14 @@
+import axios from "axios";
 import { useState } from "react";
 
 export const AdminList = () => {
   const [formData, setFormData] = useState({
     typeOfAdmin: '',
     serialNumber: '',
-    name: '',
-    phoneNumber: '',
-    username: '',
+    Name: '',
+    PhoneNumber: '',
+    EmailID:'',
+    Designation: 'CEO',
     WetherAboutUs: false,
     WetherContact: false,
     WetherCostumers: false,
@@ -36,30 +38,65 @@ export const AdminList = () => {
   };
 
   const handleApiCall = async () => {
-    try {
-      const response = await fetch('https://api.experteconsult.com/admin/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData), 
-      });
+var request={}
+request.Name=formData.Name
+    let a= await localStorage.getItem('ProfileData')
+    var x=JSON.parse(a)
 
-      if (!response.ok) {
-        throw new Error(`API request failed with status ${response.status}`);
-      }
+    var id=x.AdminData.AdminID
+   // console.log(x,x.AdminData)
+ 
+    if(formData.typeOfAdmin=='1')
+    {formData.Roles={
+    WetherAboutUs: formData.WetherAboutUs,
+    WetherContact: formData.WetherContact,
+    WetherCostumers: formData.WetherCostumers,
+    WetherDocument: formData.WetherDocument,
+    WetherBooking: formData.WetherBooking,
+    WetherPayment: formData.WetherPayment,
+    WetherMeeting: formData.WetherMeeting,
+    WetherBanner: formData.WetherBanner,
+    WetherClients: formData.WetherClients,
+    WetherHome: formData.WetherHome
+    }}
+    
+    formData.Role_Type=parseInt(formData.typeOfAdmin)
+    
+//    formData.PhoneNumber=parseInt(formData.PhoneNumber)
+    formData.AdminID=id
+    formData.SessionID=x.AdminData.SessionID
+    
+    request.Name=formData.Name
+    request.Designation="CEO"
+    request.EmailID=formData.EmailID
+    request.PhoneNumber=formData.PhoneNumber
+    request.Password=formData.Password
+     request.Role_Type=formData.Role_Type+1
+    request.Roles=formData.Roles 
+    request.AdminID=id
+    request.SessionID=x.AdminData.SessionID
 
-      const data = await response.json();
-      localStorage.setItem('ProfileData', JSON.stringify(data.data));
-
-      console.log(data.data);
-      alert("SignUp Success")
-//      setApiData(data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      alert('An error occurred while fetching data. Please try again.'); // Basic alert for error handling
-    }
-  };
+   axios
+      ({
+        "method": "POST",
+      'url':'https://api.experteconsult.com/admin/Create_Admin_User',
+      data:request
+      }).
+      then((response) => {
+        formData = {};
+        
+      }).catch((error)=>{
+var msg=''
+try {
+  msg=error.response.data.extras.msg
+} catch (error) {
+  msg="Something Wents Wrong!"
+}
+        console.log(msg)
+       alert("Warning\n\n"+msg)
+      })
+      
+      };
 
   const handlePhoneChange = (e) => {
     const { name, value } = e.target;
@@ -78,7 +115,7 @@ export const AdminList = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form data submitted:', formData);
+//    console.log('Form data submitted:', formData);
     // Perform any other actions with the form data here
     handleApiCall()
   };
@@ -122,52 +159,42 @@ export const AdminList = () => {
           </select>
         </div>
         <div className="form-group">
-          <label htmlFor="serialNumber" style={{ alignItems: 'flex-start', alignSelf: 'flex-start', textAlign: 'left' }}>S no:</label>
+          <label htmlFor="Name" style={{ alignItems: 'flex-start', alignSelf: 'flex-start', textAlign: 'left' }}>Name:</label>
           <input
             type="text"
-            id="serialNumber"
-            name="serialNumber"
-            value={formData.serialNumber}
+            id="Name"
+            name="Name"
+            value={formData.Name}
             onChange={handleChange}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="name" style={{ alignItems: 'flex-start', alignSelf: 'flex-start', textAlign: 'left' }}>Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="phoneNumber" style={{ alignItems: 'flex-start', alignSelf: 'flex-start', textAlign: 'left' }}>Phone Number:</label>
+          <label htmlFor="PhoneNumber" style={{ alignItems: 'flex-start', alignSelf: 'flex-start', textAlign: 'left' }}>Phone Number:</label>
           <input
             type="tel"
-            id="phoneNumber"
-            name="phoneNumber"
-            value={formData.phoneNumber}
+            id="PhoneNumber"
+            name="PhoneNumber"
+            value={formData.PhoneNumber}
             onChange={handlePhoneChange}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="emailId" style={{ alignItems: 'flex-start', alignSelf: 'flex-start', textAlign: 'left' }}>Email Id:</label>
+          <label htmlFor="EmailID" style={{ alignItems: 'flex-start', alignSelf: 'flex-start', textAlign: 'left' }}>Email Id:</label>
           <input
             type="email"
-            id="emailId"
-            name="username"
-            value={formData.username}
+            id="EmailID"
+            name="EmailID"
+            value={formData.EmailID}
             onChange={handleEmailChange}
           />
         </div>
         <div className="form-group">
-            <label htmlFor="password" style={{ alignItems: 'flex-start', alignSelf: 'flex-start', textAlign: 'left' }}>Password:</label>
+            <label htmlFor="Password" style={{ alignItems: 'flex-start', alignSelf: 'flex-start', textAlign: 'left' }}>Password:</label>
             <input
               type="password"
-              id="password"
-              name="password"
-              value={formData.password}
+              id="Password"
+              name="Password"
+              value={formData.Password}
               onChange={handleChange}
             />
           </div>
