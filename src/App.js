@@ -9,11 +9,23 @@ import { Client, Login } from './components/Clients';
 function App() {
   const [isLogin,setLogin]=useState(false)
   const [tab,setTab]=useState(0)
+  var [data,setData]=useState({})
   const updateTab=(tabValue)=>{
     setTab(tabValue)
   }
+  const getData= async()=>{
+    let a = await localStorage.getItem('ProfileData')
+    var x = JSON.parse(a)
+    setData(x.AdminData)
+    if(x.AdminData.Role_Type=='1'){
+      setTab(0)
+    }else{
+      setTab(1)
+    }
+  }
   const updateLogin=(tabValue)=>{
     setLogin(tabValue)
+    getData()
   }
   return (
     <div>

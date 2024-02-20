@@ -37,8 +37,7 @@ export const NavBar = ({ style ,updateTab}) => {
   }, []);
   const getInformation= async()=> {
     let x= await localStorage.getItem('ProfileData')
-    console.log(x,x.AdminData);
-    
+    console.log(JSON.parse(x));
     setData(JSON.parse(x))
   }
   if(!data||!data.AdminData||!data.AdminData.Role_Type)
@@ -58,58 +57,58 @@ export const NavBar = ({ style ,updateTab}) => {
         alignItems: 'center',
         padding: '10px',
       }}>
-        { (data.WetherHome||data.AdminData.Role_Type == "1")&&<text alt="Logo 2" style={{ fontWeight: 'bold', paddingLeft: 20, paddingRight: 20,color:colors.primary }}>
+        { (data.AdminData.Role_Type == "1")&&<text alt="Logo 2" style={{ fontWeight: 'bold', paddingLeft: 20, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(0)}}>
             Home
           </span>
         </text>}
-       { (data.WetherClients||data.AdminData.Role_Type==1)&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+       { (data.AdminData.Roles?.WetherClients||data.AdminData.Role_Type==1||data.AdminData.Role_Type == "3")&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(1)}}>
-            Clients
+            {data.AdminData.Role_Type == "3"?"Home":"Clients"}
           </span>
         </text>}
-        { (data.WetherBanner||data.AdminData.Role_Type==1)&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+        { (data.AdminData.Roles?.WetherBanner||data.AdminData.Role_Type==1||data.AdminData.Role_Type == "3")&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(2)}}>
             Banner
           </span>
         </text>}
-        { (data.WetherMeeting||data.AdminData.Role_Type==1)&&
+        { (data.AdminData.Roles?.WetherMeeting||data.AdminData.Role_Type==1||data.AdminData.Role_Type == "3")&&
         <text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(3)}}>
             Meeting
           </span>
         </text>}
         
-        { (data.WetherPayment||data.AdminData.Role_Type==1)&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+        { (data.AdminData.Roles?.WetherPayment||data.AdminData.Role_Type==1||data.AdminData.Role_Type == "3")&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(4)}}>
             Payment
           </span>
         </text>}
         
-       { (data.WetherBooking||data.AdminData.Role_Type==1)&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+       { (data.AdminData.Roles?.WetherBooking||data.AdminData.Role_Type==1||data.AdminData.Role_Type == "3")&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(5)}}>
             Booking
           </span>
         </text>}
         
-        { (data.WetherDocument||data.AdminData.Role_Type==1)&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+        { (data.AdminData.Roles?.WetherDocument||data.AdminData.Role_Type==1||data.AdminData.Role_Type == "3")&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(6)}}>
             Documents
           </span>
         </text>}
         
-        { (data.WetherCostumers||data.AdminData.Role_Type==1)&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+        { (data.AdminData.Roles?.WetherCostumers||data.AdminData.Role_Type==1||data.AdminData.Role_Type == "3")&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(7)}}>
             Customers
           </span>
         </text>}
-       { (data.WetherContact||data.AdminData.Role_Type==1)&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+       { (data.AdminData.Roles?.WetherContact||data.AdminData.Role_Type==1||data.AdminData.Role_Type == "3")&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(8)}}>
             Contact Me
           </span>
         </text>}
         
-        { (data.WetherAboutUs||data.AdminData.Role_Type==1)&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
+        { (data.AdminData.Roles?.WetherAboutUs||data.AdminData.Role_Type==1||data.AdminData.Role_Type == "3")&&<text style={{ fontWeight: 'bold', paddingLeft: 10, paddingRight: 20,color:colors.primary }}>
           <span style={{ cursor: 'pointer' }} onClick={()=>{updateTab(9)}}>
             About us
           </span>
